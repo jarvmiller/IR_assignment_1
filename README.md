@@ -6,4 +6,4 @@ This assignment covers a few topics:
     - pos tagging
     - TD-IDF calculations
 
-Text files are included as well as a jupyter notebook with the solutions. Feel free to look! I mainly enjoyed the third problem as it wasn't tedious and introduced me to packages like *nltk* and *textblob*
+Text files are included as well as a jupyter notebook with the solutions. Feel free to look! I mainly enjoyed the third problem as it wasn't tedious and introduced me to packages like *nltk* and *textblob*!
