@@ -1,0 +1,953 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{text\_data\_analyses}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{Jarvis Miller}\label{jarvis-miller}
+
+\section{SI 650 HW 1}\label{si-650-hw-1}
+
+    \section{Question 1}\label{question-1}
+
+    \subsubsection{Part A}\label{part-a}
+
+\begin{itemize}
+\tightlist
+\item
+  Precision: 8/16 = .5
+\item
+  Recall: 8/10 = .4
+\item
+  MAP: (1 + 2/3 + 3/5 + 4/6 + 5/10 + 6/11 + 7/14 + 8/10 + 0 + 0) / 10 =
+  .52788
+\item
+  \(F_{1} = \frac{2PR}{P+R} = \frac{2*.5*.8}{.13}\) = .615385
+\end{itemize}
+
+    \subsubsection{Part B}\label{part-b}
+
+\begin{itemize}
+\tightlist
+\item
+  CG = 2 + 2 + 1 + 1 + 2 = 8
+\item
+  DCG =
+  \(2 + 0 + \frac{2}{log_{2}(3)} + 0 + \frac{1}{log_{2}(5)} + \frac{1}{log_{2}(6)} + 0 + 0 + 0 + \frac{2}{log_{2}(10)}\)
+  = 4.68145
+\item
+  nDCG = \(\frac{DCG}{IDCG} = \frac{4.68145}{6.19254} = 0.6023166\)
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Where IDCG =
+    \(2 + \frac{2}{log_{2}(2)} + \frac{2}{log_{2}(3)} + \frac{2}{log_{2}(4)} + \frac{1}{log_{2}(5)}+ \frac{1}{log_{2}(6)} + \frac{1}{log_{2}(7)} + \frac{1}{log_{2}(8)} = 7.77\)
+  \end{itemize}
+\end{itemize}
+
+    \section{Question 2}\label{question-2}
+
+    \paragraph{Part A}\label{part-a}
+
+\begin{longtable}[]{@{}rlcrr@{}}
+\toprule
+Y & P(H=1;Y) & P(U=1;Y) & P(L=1;Y) & P(Y)\tabularnewline
+\midrule
+\endhead
+1 & 0.667 & 0.833 & .33 & .5\tabularnewline
+0 & 0.333 & .5 & .33 & .5\tabularnewline
+\bottomrule
+\end{longtable}
+
+    \paragraph{Part B}\label{part-b}
+
+\(P(Y=1|H=0, U=1, L=0) = \frac{P(Y=1)P(H=0|Y=1)P(U=1|Y=1)P(L=0|Y=1)}{P(H=0, U=1, L=0|Y=0)P(Y=0) + P(H=0, U=1, L=0|Y=1)P(Y=1)}\)
+\(= \frac{.092} {.5(1-.33)(.5)(1-.33) + (1-.67)(.833)(1-.33).5} = .379\)
+
+Similarly,
+\(P(Y=0|H=0, U=1, L=0) = \frac{P(Y=0)P(H=0|Y=0)P(U=1|Y=0)P(L=0|Y=0)} {.5(1-.33)(.5)(1-.33) + (1-.67)(.833)(1-.33).5} = 0.4574827\)
+
+Based on this, we should not classify the message as spam
+
+    \paragraph{Part C}\label{part-c}
+
+The results are the not the same. This is because we are going directly
+by the table and ignoring conditional probability. The number of times
+that we have the event \(H=0, U=1, L=0\) is twice. One is when \(Y=1\)
+and the other when \(Y=0\). Thus, going by the 12 examples ignoring the
+conditional independence,
+\(P(Y=1|H=0, U=1, L=0) = \frac{1}{2} = P(Y=0|H=0, U=1, L=0)\) This
+essentially "squeezes" these events together, whereas with part b, if we
+knew a value of y and a value of H, we didn't necessarily know the value
+of U or L. So the probabilities are different.
+
+    \paragraph{Part D}\label{part-d}
+
+You have to follow the properties of a probability measure. For example,
+\(P(H=0, U=1, L=0) = P(H=0, U=1, L=0|Y=0) + P(H=0, U=1, L=0|Y=1)\)
+\(= P(H=0|Y=0)P(U=1|Y=0)P(L=0|Y=0) + P(H=0|Y=1)P(U=1|Y=1)P(L=0|Y=1)\)
+
+If we put all values = .999, then the sum would be greater than one. But
+\(P:\Omega \to [0,1]\) so probabilities can't have a value greater than
+1
+
+    \paragraph{Part E}\label{part-e}
+
+Sure, make H=0 in row 2. This makes
+
+\(P(Y=1|H=0, U=1, L=0) \frac{P(Y=1, H=1, U=1, L=0)}{P(H=0, U=1, L=0|Y=0) + P(H=0, U=1, L=0|Y=0)}\)
+\(= \frac{0.1388889} {(2/3)(1/2)(2/3) + (1/2)(5/6)(2/3)} = .277\)
+
+But, for \(P(Y=0|H=0, U=1, L=0)\), the numerator is \(0.1111111\) and
+the denominator is the same as above, so
+\(P(Y=1|H=0, U=1, L=0) > P(Y=0|H=0, U=1, L=0)\) meaning we categorize as
+spam
+
+    \paragraph{Part F}\label{part-f}
+
+We would need 15 specifications, For \(Y = 0\), we have U, L, H \(\in\)
+\{0,1\}, So there are \(2^3 = 8\) different combinations. Same for
+\(Y = 1\) hence there are 16 specifications for \(P(H, U, L| Y)\).
+However, probabilities must add to one so we can find the 16th using
+1-sum(15 specified probabilities).
+
+    \paragraph{Part F}\label{part-f}
+
+Just because if you know whether a message is a spam or not, the event
+of a local number and the event of a long message isn't necessarily
+independent. Spam messages can come from local and non local numbers and
+be short or long, same for nonspam messages.
+
+    \section{Question 3}\label{question-3}
+
+    \subsection{Context}\label{context}
+
+In this exercise, we are going to get our hands dirty and play with some
+data in the wild. Download two collections from Canvas, ehr.txt and
+medhelp.txt. The first collection are sampled electronic health records
+(de-identified) released in TREC CDS 2016, with 90 documents in total.
+The second collection are sampled forum posts downloaded from MedHelp,
+with 180 documents in total. In both files, each line represents a
+document. You can also find a stopword list in stoplist.txt.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{nltk}
+        \PY{k+kn}{from} \PY{n+nn}{collections} \PY{k}{import} \PY{n}{Counter}
+        \PY{k+kn}{import} \PY{n+nn}{string}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        \PY{k+kn}{from} \PY{n+nn}{six} \PY{k}{import} \PY{n}{text\PYZus{}type}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        
+        \PY{n}{nltk}\PY{o}{.}\PY{n}{download}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{punkt}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{nltk}\PY{o}{.}\PY{n}{download}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{stopwords}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{nltk}\PY{o}{.}\PY{n}{download}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{averaged\PYZus{}perceptron\PYZus{}tagger}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+        \PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ehr.txt}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{k}{as} \PY{n}{f}\PY{p}{:}
+            \PY{n}{ehr} \PY{o}{=} \PY{n}{f}\PY{o}{.}\PY{n}{read}\PY{p}{(}\PY{p}{)}
+        \PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{medhelp.txt}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{k}{as} \PY{n}{f}\PY{p}{:}
+            \PY{n}{medhelp} \PY{o}{=} \PY{n}{f}\PY{o}{.}\PY{n}{read}\PY{p}{(}\PY{p}{)}
+        \PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{stoplist.txt}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{k}{as} \PY{n}{f}\PY{p}{:}
+            \PY{n}{stoplist} \PY{o}{=} \PY{n}{f}\PY{o}{.}\PY{n}{read}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{splitlines}\PY{p}{(}\PY{p}{)}
+        \PY{n}{punc} \PY{o}{=} \PY{n+nb}{set}\PY{p}{(}\PY{n}{string}\PY{o}{.}\PY{n}{punctuation}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[nltk\_data] Downloading package punkt to /Users/jarvm/nltk\_data{\ldots}
+[nltk\_data]   Package punkt is already up-to-date!
+[nltk\_data] Downloading package stopwords to /Users/jarvm/nltk\_data{\ldots}
+[nltk\_data]   Package stopwords is already up-to-date!
+[nltk\_data] Downloading package averaged\_perceptron\_tagger to
+[nltk\_data]     /Users/jarvm/nltk\_data{\ldots}
+[nltk\_data]   Package averaged\_perceptron\_tagger is already up-to-
+[nltk\_data]       date!
+
+    \end{Verbatim}
+
+    \subsection{Part 1}\label{part-1}
+
+Tokenize the text (e.g. use the nltk.word\_tokenize() function in the
+NLTK package) and compute the frequency of words. Then, plot the
+frequency distribution of words in each collection after the removal of
+the stopwords: x-axis - word frequency (number of times a word appears
+in the collection); y-axis -proportion of words with this frequency.
+Plot the distributions on a log-log scale. Does each plot look like a
+power-law distribution? Are the two distributions similar or different?
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{n}{ehr\PYZus{}words} \PY{o}{=} \PY{n}{nltk}\PY{o}{.}\PY{n}{word\PYZus{}tokenize}\PY{p}{(}\PY{n}{ehr}\PY{o}{.}\PY{n}{lower}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+        \PY{n}{med\PYZus{}words} \PY{o}{=} \PY{n}{nltk}\PY{o}{.}\PY{n}{word\PYZus{}tokenize}\PY{p}{(}\PY{n}{medhelp}\PY{o}{.}\PY{n}{lower}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} remove puncuation}
+        \PY{n}{ehr\PYZus{}words} \PY{o}{=} \PY{p}{[}\PY{n}{word} \PY{k}{for} \PY{n}{word} \PY{o+ow}{in} \PY{n}{ehr\PYZus{}words} \PY{k}{if} \PY{n}{word} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{punc}\PY{p}{]}
+        \PY{n}{med\PYZus{}words} \PY{o}{=} \PY{p}{[}\PY{n}{word} \PY{k}{for} \PY{n}{word} \PY{o+ow}{in} \PY{n}{med\PYZus{}words} \PY{k}{if} \PY{n}{word} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{punc}\PY{p}{]}
+        
+        
+        
+        \PY{k}{def} \PY{n+nf}{plt\PYZus{}freq\PYZus{}dist}\PY{p}{(}\PY{n}{text}\PY{p}{,} \PY{o}{*}\PY{o}{*}\PY{n}{kwargs}\PY{p}{)}\PY{p}{:}
+            \PY{n}{title}  \PY{o}{=} \PY{n}{kwargs}\PY{o}{.}\PY{n}{pop}\PY{p}{(} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{title}\PY{l+s+s1}{\PYZsq{}}  \PY{p}{)}
+            \PY{n}{xlabel} \PY{o}{=} \PY{n}{kwargs}\PY{o}{.}\PY{n}{pop}\PY{p}{(} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{xlabel}\PY{l+s+s1}{\PYZsq{}} \PY{p}{)}
+            \PY{n}{ylabel} \PY{o}{=} \PY{n}{kwargs}\PY{o}{.}\PY{n}{pop}\PY{p}{(} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ylabel}\PY{l+s+s1}{\PYZsq{}} \PY{p}{)}
+            \PY{n}{important\PYZus{}words} \PY{o}{=} \PY{p}{[}\PY{n}{word} \PY{k}{for} \PY{n}{word} \PY{o+ow}{in} \PY{n}{text} \PY{k}{if} \PY{n}{word} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{stoplist}\PY{p}{]}
+            \PY{n}{fdist} \PY{o}{=} \PY{n}{Counter}\PY{p}{(}\PY{n}{important\PYZus{}words}\PY{p}{)}
+            \PY{n}{samples} \PY{o}{=} \PY{p}{[}\PY{n}{item} \PY{k}{for} \PY{n}{item}\PY{p}{,} \PY{n}{\PYZus{}} \PY{o+ow}{in} \PY{n}{fdist}\PY{o}{.}\PY{n}{most\PYZus{}common}\PY{p}{(}\PY{p}{)}\PY{p}{]}
+            \PY{n}{freqs} \PY{o}{=} \PY{p}{[}\PY{n}{fdist}\PY{p}{[}\PY{n}{sample}\PY{p}{]} \PY{k}{for} \PY{n}{sample} \PY{o+ow}{in} \PY{n}{samples}\PY{p}{]}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{loglog}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{freqs}\PY{p}{)}\PY{o}{/}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{freqs}\PY{p}{)}\PY{p}{,} \PY{o}{*}\PY{o}{*}\PY{n}{kwargs}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{n}{xlabel}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{n}{ylabel}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{n}{title}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+        
+        \PY{n}{enh\PYZus{}labs} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{title}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ehr word frequency distribution (log log scale)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{xlabel}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log(Frequency value)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ylabel}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log(proportion of words w/ frequency)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}
+        \PY{n}{medhelp\PYZus{}labs} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{title}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{medhelp word frequency distribution (log log scale)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{xlabel}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log(Frequency value)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ylabel}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log(proportion of words w/ frequency)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}
+        
+        
+        \PY{n}{plt\PYZus{}freq\PYZus{}dist}\PY{p}{(}\PY{n}{ehr\PYZus{}words}\PY{p}{,} \PY{o}{*}\PY{o}{*}\PY{n}{enh\PYZus{}labs}\PY{p}{)}
+        \PY{n}{plt\PYZus{}freq\PYZus{}dist}\PY{p}{(}\PY{n}{med\PYZus{}words}\PY{p}{,} \PY{o}{*}\PY{o}{*}\PY{n}{medhelp\PYZus{}labs}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{text_data_analyses_files/text_data_analyses_16_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{text_data_analyses_files/text_data_analyses_16_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsubsection{Discussion}\label{discussion}
+
+The distributions look similar. In the medhelp document, the max
+log(proprotion of words with frequency) is greater than that of ehr. I
+decided to only use the punctuation in the string argument. This means
+that there are certain things such as '...' that aren't removed. Also, I
+did not combine certains combinations of words (list vs lists are
+treated separately). Lastly, I included both part of separated
+contractions (can't becomes can and 't'. I keep both). In order to keep
+as much of the raw data as possible since this is more of an exploratory
+assignment.
+
+    \subsection{Part 2}\label{part-2}
+
+Now compare the two collections more rigorously. Report the following
+properties of each collection. Can you explain these differences based
+on the nature of the two collections? (20 points) (You can use the
+nltk.pos tag() function of the NLTK package for part of speech tagging.)
+- (a) frequency of stopwords (percentage of the word occurrences that
+are stopwords.); - (b) percentage of capital letters; - (c) average
+number of characters per word; - (d) percentage of nouns, adjectives,
+verbs, adverbs, and pronouns; - (e) the top 10 nouns, top 10 verbs, and
+top 10 adjectives
+
+    \paragraph{frequency of stopwords}\label{frequency-of-stopwords}
+
+I split each document by spaces, then accumulated the number or
+occurrences of each stopword in the given stoplist
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{c+c1}{\PYZsh{} enh text}
+        \PY{n}{counter\PYZus{}ehr} \PY{o}{=} \PY{l+m+mi}{0}
+        \PY{n}{counter\PYZus{}medhelp} \PY{o}{=} \PY{l+m+mi}{0}
+        \PY{n}{ehrsplit} \PY{o}{=} \PY{n}{ehr}\PY{o}{.}\PY{n}{lower}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{p}{)}
+        \PY{n}{medsplit} \PY{o}{=} \PY{n}{medhelp}\PY{o}{.}\PY{n}{lower}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{p}{)}
+        \PY{k}{for} \PY{n}{stopword} \PY{o+ow}{in} \PY{n}{stoplist}\PY{p}{:}
+            \PY{n}{counter\PYZus{}ehr} \PY{o}{+}\PY{o}{=} \PY{n}{ehrsplit}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{n}{stopword}\PY{p}{)}
+            \PY{n}{counter\PYZus{}medhelp} \PY{o}{+}\PY{o}{=} \PY{n}{medsplit}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{n}{stopword}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{enh frequency of stopwords:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n+nb}{str}\PY{p}{(}\PY{n}{counter\PYZus{}ehr} \PY{o}{/} \PY{n+nb}{len}\PY{p}{(}\PY{n}{ehrsplit}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{medhelp frequency of stopwords:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n+nb}{str}\PY{p}{(}\PY{n}{counter\PYZus{}medhelp} \PY{o}{/} \PY{n+nb}{len}\PY{p}{(}\PY{n}{medsplit}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+enh frequency of stopwords: 0.34723595505617977
+medhelp frequency of stopwords: 0.5401267490744808
+
+    \end{Verbatim}
+
+    \paragraph{percentage of capital
+letters}\label{percentage-of-capital-letters}
+
+For this, I found each capital letter using the \emph{re} module. The
+denominator is the length of the document minus the number of spaces in
+the letter. This is an estimate of the total number of letters in the
+document
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{k+kn}{import} \PY{n+nn}{re}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{percentage of capital letters in ehr:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{re}\PY{o}{.}\PY{n}{findall}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{[A\PYZhy{}Z]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{ehr}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{ehr}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{ehr}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)} \PY{o}{*} \PY{l+m+mi}{100}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{percentage of capital letters in medhelp:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{re}\PY{o}{.}\PY{n}{findall}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{[A\PYZhy{}Z]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{medhelp}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{medhelp}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{medhelp}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)} \PY{o}{*} \PY{l+m+mi}{100}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+percentage of capital letters in ehr: 6.235090188271234
+percentage of capital letters in medhelp: 3.2856877668461113
+
+    \end{Verbatim}
+
+    \paragraph{average number of characters per
+word}\label{average-number-of-characters-per-word}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        
+        \PY{n}{ehr\PYZus{}word\PYZus{}len} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{asarray}\PY{p}{(}\PY{p}{[}\PY{n+nb}{len}\PY{p}{(}\PY{n}{word}\PY{p}{)} \PY{k}{for} \PY{n}{word} \PY{o+ow}{in} \PY{n}{ehr\PYZus{}words}\PY{p}{]}\PY{p}{)}
+        \PY{n}{med\PYZus{}word\PYZus{}len} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{asarray}\PY{p}{(}\PY{p}{[}\PY{n+nb}{len}\PY{p}{(}\PY{n}{word}\PY{p}{)} \PY{k}{for} \PY{n}{word} \PY{o+ow}{in} \PY{n}{med\PYZus{}words}\PY{p}{]}\PY{p}{)}
+         
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{average number of chars per word for enh:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{ehr\PYZus{}word\PYZus{}len}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{average number of chars per word for medhelp:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{med\PYZus{}word\PYZus{}len}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+average number of chars per word for enh: 5.00260416667
+average number of chars per word for medhelp: 4.14757092414
+
+    \end{Verbatim}
+
+    \paragraph{percentage of nouns, adjectives, verbs, adverbs, and
+pronouns;}\label{percentage-of-nouns-adjectives-verbs-adverbs-and-pronouns}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{k}{def} \PY{n+nf}{pos\PYZus{}dict}\PY{p}{(}\PY{n}{word\PYZus{}tokens}\PY{p}{)}\PY{p}{:}
+            \PY{n}{word\PYZus{}dict} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+            \PY{n}{pos\PYZus{}tokens} \PY{o}{=} \PY{n}{nltk}\PY{o}{.}\PY{n}{pos\PYZus{}tag}\PY{p}{(}\PY{n}{word\PYZus{}tokens}\PY{p}{)}
+            \PY{n}{d} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{RB}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{JJ}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{NN}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{PRP}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{VB}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{l+m+mi}{0}\PY{p}{\PYZcb{}}
+        
+            \PY{k}{def} \PY{n+nf}{build\PYZus{}dict}\PY{p}{(}\PY{n}{item}\PY{p}{,} \PY{n}{category}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{d}\PY{p}{[}\PY{n}{category}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                    \PY{k}{try}\PY{p}{:}
+                        \PY{n}{word\PYZus{}dict}\PY{p}{[}\PY{n}{category}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{item}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+                    \PY{k}{except}\PY{p}{:}
+                        \PY{n}{word\PYZus{}dict}\PY{p}{[}\PY{n}{category}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        
+            \PY{k}{for} \PY{n}{item} \PY{o+ow}{in} \PY{n}{pos\PYZus{}tokens}\PY{p}{:}
+                \PY{k}{if} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{RB}\PY{l+s+s2}{\PYZdq{}} \PY{o+ow}{in} \PY{n}{item}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{:}
+                    \PY{n}{build\PYZus{}dict}\PY{p}{(}\PY{n}{item}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{RB}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                \PY{k}{elif} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{JJ}\PY{l+s+s2}{\PYZdq{}} \PY{o+ow}{in} \PY{n}{item}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{:}
+                    \PY{n}{build\PYZus{}dict}\PY{p}{(}\PY{n}{item}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{JJ}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                \PY{k}{elif} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{NN}\PY{l+s+s2}{\PYZdq{}} \PY{o+ow}{in} \PY{n}{item}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{:}
+                    \PY{n}{build\PYZus{}dict}\PY{p}{(}\PY{n}{item}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{NN}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                \PY{k}{elif} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{PRP}\PY{l+s+s2}{\PYZdq{}} \PY{o+ow}{in} \PY{n}{item}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{:}
+                    \PY{n}{build\PYZus{}dict}\PY{p}{(}\PY{n}{item}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{PRP}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                \PY{k}{elif} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{WP}\PY{l+s+s2}{\PYZdq{}} \PY{o+ow}{in} \PY{n}{item}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{:} \PY{c+c1}{\PYZsh{} same as PRP}
+                    \PY{n}{build\PYZus{}dict}\PY{p}{(}\PY{n}{item}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{PRP}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                \PY{k}{elif} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{VB}\PY{l+s+s2}{\PYZdq{}} \PY{o+ow}{in} \PY{n}{item}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{:}
+                    \PY{n}{build\PYZus{}dict}\PY{p}{(}\PY{n}{item}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{VB}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                \PY{k}{else}\PY{p}{:}
+                    \PY{k}{pass}
+            \PY{k}{return} \PY{n}{d}\PY{p}{,} \PY{n}{word\PYZus{}dict}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{n}{ehr\PYZus{}pos\PYZus{}dict}\PY{p}{,} \PY{n}{ehr\PYZus{}pos\PYZus{}words} \PY{o}{=} \PY{n}{pos\PYZus{}dict}\PY{p}{(}\PY{n}{ehr\PYZus{}words}\PY{p}{)}
+        \PY{n}{ehr\PYZus{}len} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{ehr\PYZus{}words}\PY{p}{)}
+        \PY{k}{for} \PY{n}{key}\PY{p}{,} \PY{n}{val} \PY{o+ow}{in} \PY{n}{ehr\PYZus{}pos\PYZus{}dict}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{perc of }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ in ehr is:}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}}\PY{k}{key}, val/ehr\PYZus{}len * 100)
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{medhelp\PYZus{}len} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{med\PYZus{}words}\PY{p}{)}
+        \PY{n}{med\PYZus{}pos\PYZus{}dict}\PY{p}{,} \PY{n}{med\PYZus{}pos\PYZus{}words} \PY{o}{=} \PY{n}{pos\PYZus{}dict}\PY{p}{(}\PY{n}{med\PYZus{}words}\PY{p}{)}
+        \PY{k}{for} \PY{n}{key}\PY{p}{,} \PY{n}{val} \PY{o+ow}{in} \PY{n}{med\PYZus{}pos\PYZus{}dict}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{perc of }\PY{l+s+si}{\PYZob{}0\PYZcb{}}\PY{l+s+s2}{ in medhelp is:}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{key}\PY{p}{)}\PY{p}{,} \PY{n}{val}\PY{o}{/}\PY{n}{medhelp\PYZus{}len} \PY{o}{*} \PY{l+m+mi}{100}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+perc of RB in ehr is: 3.708692528735632
+perc of JJ in ehr is: 15.445402298850574
+perc of NN in ehr is: 31.573275862068968
+perc of PRP in ehr is: 4.014008620689656
+perc of VB in ehr is: 15.777658045977011
+
+
+perc of RB in medhelp is: 8.297820528430536
+perc of JJ in medhelp is: 9.101424570802386
+perc of NN in medhelp is: 21.472056495799343
+perc of PRP in medhelp is: 8.91269937903324
+perc of VB in medhelp is: 21.48423231462316
+
+    \end{Verbatim}
+
+    \paragraph{the top 10 nouns, top 10 verbs, and top 10
+adjectives}\label{the-top-10-nouns-top-10-verbs-and-top-10-adjectives}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{k}{for} \PY{n}{key}\PY{p}{,} \PY{n}{li} \PY{o+ow}{in} \PY{n}{ehr\PYZus{}pos\PYZus{}words}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{top 10 }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{ words in ehr:}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{key}\PY{p}{)}\PY{p}{,} \PY{n}{Counter}\PY{p}{(}\PY{n}{li}\PY{p}{)}\PY{o}{.}\PY{n}{most\PYZus{}common}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+top 10 NN words in ehr:
+ [('pain', 67), ('patient', 66), ('pt', 42), ('history', 34), ('home', 29), ('blood', 29), ('days', 25), ('breath', 22), ('fibrillation', 21), ('weeks', 21)]
+top 10 VB words in ehr:
+ [('was', 197), ('is', 72), ('had', 71), ('has', 55), ('given', 28), ('were', 27), ('have', 22), ('found', 22), ('be', 22), ('left', 22)]
+top 10 JJ words in ehr:
+ [('abdominal', 37), ('atrial', 29), ('right', 23), ('last', 23), ('normal', 19), ('past', 17), ('positive', 17), ('old', 17), ('negative', 16), ('recent', 15)]
+top 10 RB words in ehr:
+ [('not', 56), ('also', 32), ('then', 16), ('when', 16), ('ago', 14), ('right', 13), ('back', 12), ('recently', 12), ('well', 11), ('prior', 10)]
+top 10 PRP words in ehr:
+ [('she', 171), ('he', 106), ('her', 90), ('his', 39), ('who', 31), ('it', 4), ('their', 1), ('they', 1), ('him', 1), ('heroin', 1)]
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{k}{for} \PY{n}{key}\PY{p}{,} \PY{n}{li} \PY{o+ow}{in} \PY{n}{med\PYZus{}pos\PYZus{}words}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{top 10 }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{ words in medhelp: }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{key}\PY{p}{)}\PY{p}{,} \PY{n}{Counter}\PY{p}{(}\PY{n}{li}\PY{p}{)}\PY{o}{.}\PY{n}{most\PYZus{}common}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+top 10 PRP words in medhelp: 
+ [('you', 333), ('it', 265), ('my', 201), ('your', 113), ('me', 84), ('he', 73), ('they', 73), ('what', 56), ('we', 34), ('them', 33)]
+top 10 NN words in medhelp: 
+ [('i', 342), ('time', 47), ('day', 28), ('people', 23), ('things', 22), ('weeks', 22), ('days', 21), ('pain', 21), ('doctor', 20), ('body', 18)]
+top 10 VB words in medhelp: 
+ [('is', 232), ('have', 189), ('are', 122), ('be', 117), ('i', 100), ('was', 91), ('do', 90), ('get', 69), ('had', 58), ('am', 57)]
+top 10 RB words in medhelp: 
+ [("n't", 110), ('not', 109), ('so', 82), ('just', 70), ('very', 53), ('really', 44), ('when', 44), ('then', 37), ('now', 37), ('also', 31)]
+top 10 JJ words in medhelp: 
+ [('i', 137), ('good', 33), ('sure', 22), ('other', 21), ('more', 20), ('many', 19), ('normal', 17), ('long', 16), ('few', 14), ('better', 14)]
+
+    \end{Verbatim}
+
+    \subsection{Part 3}\label{part-3}
+
+We would like to summarize each document with a few words. However,
+picking the most frequently used words in each document would be a bad
+idea, since they are more likely to appear in other document as well.
+Instead, we pick the words with the highest TF-IDF weights in each
+document. In this problem, term frequency (TF) and inverse document
+frequency (IDF) are defined as: - \emph{TF(t, d) = log(c(t, d) + 1)} -
+\emph{IDF(t) = 1 + log(N/k).}
+
+c(t, d) is the frequency count of term t in doc d, N is the total number
+of documents in the collection, and k is the document frequency of term
+t in the collection. For each of the first 10 documents in the EHR
+collection, print out the 5 words that have the highest TF-IDF weights.
+
+    Here, I assumed you meant "act as if your collection was only 10
+documents long, calculate the tdf for each document" instead of
+calculate the tdf for each document even though there are 90 and 180
+documents total. Thus, \(N=10\) for both of my calculations
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{k+kn}{import} \PY{n+nn}{math}
+         \PY{k+kn}{from} \PY{n+nn}{textblob} \PY{k}{import} \PY{n}{TextBlob} \PY{k}{as} \PY{n}{tb}
+         
+         \PY{k}{def} \PY{n+nf}{tf}\PY{p}{(}\PY{n}{word}\PY{p}{,} \PY{n}{blob}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{blob}\PY{o}{.}\PY{n}{words}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{n}{word}\PY{p}{)} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}
+         
+         \PY{k}{def} \PY{n+nf}{idf}\PY{p}{(}\PY{n}{word}\PY{p}{,} \PY{n}{bloblist}\PY{p}{)}\PY{p}{:}
+             \PY{n}{N} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{bloblist}\PY{p}{)}
+             
+             \PY{k}{def} \PY{n+nf}{num\PYZus{}occurances}\PY{p}{(}\PY{n}{word}\PY{p}{,} \PY{n}{bloblist}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{return} \PY{p}{(}\PY{n+nb}{sum}\PY{p}{(}\PY{l+m+mi}{1} \PY{k}{for} \PY{n}{blob} \PY{o+ow}{in} \PY{n}{bloblist} \PY{k}{if} \PY{n}{word} \PY{o+ow}{in} \PY{n}{blob}\PY{o}{.}\PY{n}{words}\PY{p}{)}\PY{p}{)}
+             \PY{k}{return} \PY{l+m+mi}{1} \PY{o}{+} \PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{N} \PY{o}{/} \PY{n}{num\PYZus{}occurances}\PY{p}{(}\PY{n}{word}\PY{p}{,} \PY{n}{bloblist}\PY{p}{)}\PY{p}{)}
+         
+         \PY{k}{def} \PY{n+nf}{tfidf}\PY{p}{(}\PY{n}{word}\PY{p}{,} \PY{n}{blob}\PY{p}{,} \PY{n}{bloblist}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{n}{tf}\PY{p}{(}\PY{n}{word}\PY{p}{,} \PY{n}{blob}\PY{p}{)} \PY{o}{*} \PY{n}{idf}\PY{p}{(}\PY{n}{word}\PY{p}{,} \PY{n}{bloblist}\PY{p}{)}
+         
+         \PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ehr.txt}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{k}{as} \PY{n}{f}\PY{p}{:}
+             \PY{n}{bloblist} \PY{o}{=} \PY{p}{[}\PY{n}{tb}\PY{p}{(}\PY{n+nb}{next}\PY{p}{(}\PY{n}{f}\PY{p}{)}\PY{o}{.}\PY{n}{lower}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{]}
+             
+         \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{blob} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{bloblist}\PY{p}{)}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Top words in document }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+             \PY{n}{scores} \PY{o}{=} \PY{p}{\PYZob{}}\PY{n}{word}\PY{p}{:} \PY{n}{tfidf}\PY{p}{(}\PY{n}{word}\PY{p}{,} \PY{n}{blob}\PY{p}{,} \PY{n}{bloblist}\PY{p}{)} \PY{k}{for} \PY{n}{word} \PY{o+ow}{in} \PY{n}{blob}\PY{o}{.}\PY{n}{words}\PY{p}{\PYZcb{}}
+             \PY{n}{sorted\PYZus{}words} \PY{o}{=} \PY{n+nb}{sorted}\PY{p}{(}\PY{n}{scores}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{key}\PY{o}{=}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{reverse}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+             \PY{k}{for} \PY{n}{word}\PY{p}{,} \PY{n}{score} \PY{o+ow}{in} \PY{n}{sorted\PYZus{}words}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{5}\PY{p}{]}\PY{p}{:}
+                     \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+s2}{Word: }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{, TF\PYZhy{}IDF: }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{word}\PY{p}{,} \PY{n+nb}{round}\PY{p}{(}\PY{n}{score}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Top words in document 1
+	Word: some, TF-IDF: 3.62826
+	Word: he, TF-IDF: 2.42131
+	Word: 78, TF-IDF: 2.28918
+	Word: m, TF-IDF: 2.28918
+	Word: transferred, TF-IDF: 2.28918
+Top words in document 2
+	Word: elderly, TF-IDF: 2.28918
+	Word: past, TF-IDF: 2.28918
+	Word: aortic, TF-IDF: 2.28918
+	Word: hyperlipidemia, TF-IDF: 2.28918
+	Word: hip, TF-IDF: 2.28918
+Top words in document 3
+	Word: hypotension, TF-IDF: 3.62826
+	Word: pt, TF-IDF: 3.61745
+	Word: on, TF-IDF: 3.08415
+	Word: she, TF-IDF: 2.93993
+	Word: has, TF-IDF: 2.86676
+Top words in document 4
+	Word: c2, TF-IDF: 3.62826
+	Word: fracture, TF-IDF: 3.62826
+	Word: when, TF-IDF: 3.62826
+	Word: fall, TF-IDF: 3.62826
+	Word: patient, TF-IDF: 3.54716
+Top words in document 5
+	Word: status-post, TF-IDF: 3.62826
+	Word: atrial, TF-IDF: 3.61745
+	Word: 82, TF-IDF: 2.28918
+	Word: man, TF-IDF: 2.28918
+	Word: chronic, TF-IDF: 2.28918
+Top words in document 6
+	Word: stools, TF-IDF: 3.62826
+	Word: abdominal, TF-IDF: 3.61745
+	Word: she, TF-IDF: 2.43158
+	Word: 94, TF-IDF: 2.28918
+	Word: year, TF-IDF: 2.28918
+Top words in document 7
+	Word: his, TF-IDF: 5.31531
+	Word: he, TF-IDF: 5.07483
+	Word: abdominal, TF-IDF: 4.19973
+	Word: episodes, TF-IDF: 3.62826
+	Word: vomiting, TF-IDF: 3.62826
+Top words in document 8
+	Word: ago, TF-IDF: 3.62826
+	Word: admitted, TF-IDF: 3.62826
+	Word: reglan, TF-IDF: 3.62826
+	Word: she, TF-IDF: 3.4788
+	Word: ivf, TF-IDF: 2.86676
+Top words in document 9
+	Word: delivery, TF-IDF: 5.31531
+	Word: mother, TF-IDF: 4.57836
+	Word: 678, TF-IDF: 3.62826
+	Word: gm, TF-IDF: 3.62826
+	Word: notable, TF-IDF: 3.62826
+Top words in document 10
+	Word: unresponsive, TF-IDF: 2.86676
+	Word: as, TF-IDF: 2.86676
+	Word: ed, TF-IDF: 2.42131
+	Word: and, TF-IDF: 2.30259
+	Word: 55y/o, TF-IDF: 2.28918
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{medhelp.txt}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{k}{as} \PY{n}{f}\PY{p}{:}
+             \PY{n}{bloblist} \PY{o}{=} \PY{p}{[}\PY{n}{tb}\PY{p}{(}\PY{n+nb}{next}\PY{p}{(}\PY{n}{f}\PY{p}{)}\PY{p}{)} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{]}
+             
+         \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{blob} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{bloblist}\PY{p}{)}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Top words in document }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+             \PY{n}{scores} \PY{o}{=} \PY{p}{\PYZob{}}\PY{n}{word}\PY{p}{:} \PY{n}{tfidf}\PY{p}{(}\PY{n}{word}\PY{p}{,} \PY{n}{blob}\PY{p}{,} \PY{n}{bloblist}\PY{p}{)} \PY{k}{for} \PY{n}{word} \PY{o+ow}{in} \PY{n}{blob}\PY{o}{.}\PY{n}{words}\PY{p}{\PYZcb{}}
+             \PY{n}{sorted\PYZus{}words} \PY{o}{=} \PY{n+nb}{sorted}\PY{p}{(}\PY{n}{scores}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{key}\PY{o}{=}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{reverse}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+             \PY{k}{for} \PY{n}{word}\PY{p}{,} \PY{n}{score} \PY{o+ow}{in} \PY{n}{sorted\PYZus{}words}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{10}\PY{p}{]}\PY{p}{:}
+                     \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+s2}{Word: }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{, TF\PYZhy{}IDF: }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{word}\PY{p}{,} \PY{n+nb}{round}\PY{p}{(}\PY{n}{score}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Top words in document 1
+	Word: MD, TF-IDF: 3.62826
+	Word: Your, TF-IDF: 2.28918
+	Word: description, TF-IDF: 2.28918
+	Word: sound, TF-IDF: 2.28918
+	Word: like, TF-IDF: 2.28918
+	Word: regular, TF-IDF: 2.28918
+	Word: floater, TF-IDF: 2.28918
+	Word: Since, TF-IDF: 2.28918
+	Word: new, TF-IDF: 2.28918
+	Word: problem, TF-IDF: 2.28918
+Top words in document 2
+	Word: BP, TF-IDF: 3.62826
+	Word: your, TF-IDF: 2.42131
+	Word: is, TF-IDF: 2.3472
+	Word: certain, TF-IDF: 2.28918
+	Word: weight, TF-IDF: 2.28918
+	Word: loss, TF-IDF: 2.28918
+	Word: want, TF-IDF: 2.28918
+	Word: congratulate, TF-IDF: 2.28918
+	Word: getting, TF-IDF: 2.28918
+	Word: under, TF-IDF: 2.28918
+Top words in document 3
+	Word: Smoking, TF-IDF: 2.28918
+	Word: effect, TF-IDF: 2.28918
+	Word: octcome, TF-IDF: 2.28918
+	Word: treatment, TF-IDF: 2.28918
+	Word: Best, TF-IDF: 1.80872
+	Word: will, TF-IDF: 1.52768
+	Word: not, TF-IDF: 0.94038
+	Word: of, TF-IDF: 0.94038
+	Word: you, TF-IDF: 0.94038
+	Word: to, TF-IDF: 0.84782
+Top words in document 4
+	Word: He, TF-IDF: 8.20662
+	Word: he, TF-IDF: 8.20662
+	Word: i, TF-IDF: 6.86753
+	Word: him, TF-IDF: 6.42653
+	Word: his, TF-IDF: 5.91744
+	Word: The, TF-IDF: 5.42617
+	Word: has, TF-IDF: 4.67549
+	Word: and, TF-IDF: 4.67549
+	Word: Of, TF-IDF: 4.57836
+	Word: before, TF-IDF: 3.62826
+Top words in document 5
+	Word: it, TF-IDF: 3.05536
+	Word: either, TF-IDF: 2.86676
+	Word: so, TF-IDF: 2.86676
+	Word: you, TF-IDF: 2.43084
+	Word: had, TF-IDF: 2.42131
+	Word: First, TF-IDF: 2.28918
+	Word: received, TF-IDF: 2.28918
+	Word: appropriate, TF-IDF: 2.28918
+	Word: therapy, TF-IDF: 2.28918
+	Word: kill, TF-IDF: 2.28918
+Top words in document 6
+	Word: You, TF-IDF: 3.62826
+	Word: time, TF-IDF: 3.62826
+	Word: cut, TF-IDF: 3.62826
+	Word: was, TF-IDF: 2.86676
+	Word: Sir, TF-IDF: 2.28918
+	Word: taking, TF-IDF: 2.28918
+	Word: answer, TF-IDF: 2.28918
+	Word: question, TF-IDF: 2.28918
+	Word: paranoid, TF-IDF: 2.28918
+	Word: long, TF-IDF: 2.28918
+Top words in document 7
+	Word: The, TF-IDF: 5.73352
+	Word: NOT, TF-IDF: 5.31531
+	Word: and, TF-IDF: 4.67549
+	Word: 's, TF-IDF: 4.57836
+	Word: cells, TF-IDF: 4.57836
+	Word: were, TF-IDF: 4.57836
+	Word: Many, TF-IDF: 4.57836
+	Word: many, TF-IDF: 4.57836
+	Word: results, TF-IDF: 3.62826
+	Word: mean, TF-IDF: 3.62826
+Top words in document 8
+	Word: b, TF-IDF: 3.62826
+	Word: doctor, TF-IDF: 2.86676
+	Word: would, TF-IDF: 2.42131
+	Word: believe, TF-IDF: 2.28918
+	Word: ur, TF-IDF: 2.28918
+	Word: london, TF-IDF: 2.28918
+	Word: friend, TF-IDF: 2.28918
+	Word: 2wks, TF-IDF: 2.28918
+	Word: after, TF-IDF: 2.28918
+	Word: our, TF-IDF: 2.28918
+Top words in document 9
+	Word: We, TF-IDF: 3.62826
+	Word: need, TF-IDF: 2.28918
+	Word: Hallmark, TF-IDF: 2.28918
+	Word: Movie, TF-IDF: 2.28918
+	Word: this, TF-IDF: 2.28918
+	Word: 've, TF-IDF: 2.28918
+	Word: already, TF-IDF: 2.28918
+	Word: started, TF-IDF: 2.28918
+	Word: crying, TF-IDF: 2.28918
+	Word: Yeah, TF-IDF: 2.28918
+Top words in document 10
+	Word: around, TF-IDF: 3.62826
+	Word: Would, TF-IDF: 3.62826
+	Word: It, TF-IDF: 3.62826
+	Word: as, TF-IDF: 3.62826
+	Word: who, TF-IDF: 3.62826
+	Word: see, TF-IDF: 2.86676
+	Word: be, TF-IDF: 2.42131
+	Word: would, TF-IDF: 2.42131
+	Word: Thanks, TF-IDF: 2.28918
+	Word: help, TF-IDF: 2.28918
+
+    \end{Verbatim}
+
+    \subsection{Part 4}\label{part-4}
+
+As discussed in the class, TF-IDF is a common way to weight the terms in
+each document. It can also be easily calculated from the inverted index,
+since TF can be obtained from the postings and IDF can be summarized as
+a dictionary. Could you think of another weighting that cannot be
+calculated directly from inverted index? What is the advantage of such a
+weighting?
+
+    You can try to weight words using their pointwise mutual information.
+This can't be calculated directly from the inverted index because we
+need a number of co-occurences of words together. This is helpful
+because it can help determine collocated phrases within documents
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
